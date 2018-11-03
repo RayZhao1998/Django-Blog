@@ -3,6 +3,7 @@
 {% block links %}
     {% load staticfiles %}
     <link href="{% static 'css_js/index.css' %}" rel="stylesheet" type="text/css">
+    <script src="{% static 'css_js/index.js' %}"></script>
 {% endblock %}
 {% block body %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -18,7 +19,7 @@
 
     <div class="container">
         {% for blog in all_blogs.object_list %}
-            <div class="card">
+            <div class="card" id="card-{{blog.id}}" onclick="location.href='{% url 'blog_id' blog.id %}'">
                 <div class="card-body">
                     <h5 class="card-title">{{blog.title}}</h5>
                     <p class="card-text">{{blog.content}}</p>
@@ -29,40 +30,43 @@
         {% endfor %}
     </div> 
     
-    <div class="container">
+    <div class="container center-block">
         <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                {% if all_blogs.has_previous %}
-                    <li class="page-item">
-                        <a class="page-link" href="?{{ all_blogs.previous_page_number.querystring }}">Previous</a>
-                    </li>
-                {% else %}
-                    <li class="page-item disabled">
-                        <a class="page-link" href="?{{ all_blogs.previous_page_number.querystring }}">Previous</a>
-                    </li>
-                {% endif %}
-                    
-    
-                {% for page in all_blogs.pages %}
-                    {% if page %}
-                        {% ifequal page all_blogs.number %}
-                            <li class="page-item active"><a class="page-link" href="?{{ page.querystring }}">{{ page }}</a></li>
-                        {% else %}
-                            <li class="page-item"><a class="page-link" href="?{{ page.querystring }}">{{ page }}</a></li>
-                        {% endifequal %}
+            <div class="center-block">
+                <ul class="pagination">
+                    {% if all_blogs.has_previous %}
+                        <li class="page-item">
+                            <a class="page-link" href="?{{ all_blogs.previous_page_number.querystring }}">Previous</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link" href="?{{ all_blogs.previous_page_number.querystring }}">Previous</a>
+                        </li>
                     {% endif %}
-                {% endfor %}
-    
-                {% if all_blogs.has_next %}
-                    <li class="page-item">
-                        <a class="page-link" href="?{{ all_blogs.next_page_number.querystring }}">Next</a>
-                    </li>
-                {% else %}
-                    <li class="page-item disabled">
-                        <a class="page-link disabled" href="?{{ all_blogs.next_page_number.querystring }}">Next</a>
-                    </li>
-                {% endif %}
-            </ul>
+                        
+        
+                    {% for page in all_blogs.pages %}
+                        {% if page %}
+                            {% ifequal page all_blogs.number %}
+                                <li class="page-item active"><a class="page-link" href="?{{ page.querystring }}">{{ page }}</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?{{ page.querystring }}">{{ page }}</a></li>
+                            {% endifequal %}
+                        {% endif %}
+                    {% endfor %}
+        
+                    {% if all_blogs.has_next %}
+                        <li class="page-item">
+                            <a class="page-link" href="?{{ all_blogs.next_page_number.querystring }}">Next</a>
+                        </li>
+                    {% else %}
+                        <li class="page-item disabled">
+                            <a class="page-link disabled" href="?{{ all_blogs.next_page_number.querystring }}">Next</a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+            
         </nav>
     </div>
     

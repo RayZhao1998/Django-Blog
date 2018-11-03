@@ -19,3 +19,10 @@ class IndexView(View):
         return render(request, 'index.html', {
             'all_blogs': all_blogs,
         })
+
+class BlogDetailView(View):
+    def get(self, request, blog_id):
+        blog = Blog.objects.get(id=blog_id)
+        return render(request, 'blog-detail.html', {
+            'blog': blog,
+        })
