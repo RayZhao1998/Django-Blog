@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from blog.models import Blog, Category, Tag
 from pure_pagination import PageNotAnInteger, Paginator
-import markdown
+import markdown2
 
 # Create your views here.
 
@@ -24,7 +24,7 @@ class IndexView(View):
 class BlogDetailView(View):
     def get(self, request, blog_id):
         blog = Blog.objects.get(id=blog_id)
-        blog.content = markdown.markdown(blog.content)
+        blog.content = markdown2.markdown(blog.content, extras=['fenced-code-blocks'])
         return render(request, 'blog-detail.html', {
             'blog': blog,
         })

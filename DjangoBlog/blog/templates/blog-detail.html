@@ -1,6 +1,24 @@
 {% extends 'base.html' %}
 
+{% block links %}
+    {% load staticfiles %}
+    <link href="{% static 'css_js/pygments.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css_js/vue.css' %}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet"
+      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+    
+{% endblock %}
+
 {% block body %}
     <h1>{{ blog.title }}</h1>
     <p>{{ blog.content|safe }}</p>
 {% endblock %}
+
+<script>
+    $(document).ready(function() {
+        $('pre code').each(function(i, block) {
+            hljs.highlightBlock(block)
+        })
+    })
+</script>
