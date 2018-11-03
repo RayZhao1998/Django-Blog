@@ -32,6 +32,7 @@ STATICFILES_DIRS = (
 )
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
