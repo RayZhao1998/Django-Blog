@@ -1,3 +1,4 @@
 django
 PyMySQL
 django-pure-pagination
+markdown
