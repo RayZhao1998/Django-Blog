@@ -1,6 +1,9 @@
-{% for blog in all_blogs.object_list %}
-    {{ blog.title }}
-{% endfor %}
+{% extends 'base.html' %}
+{% block title %}index{% endblock %}
+{% block body %}
+    {% for blog in all_blogs.object_list %}
+        {{ blog.title }}
+    {% endfor %}
 
-<a href="?{{ all_blogs.next_page_number.querystring }}">下一页</a>
-    
+    <a href="?{{ all_blogs.next_page_number.querystring }}">下一页</a>
+{% endblock %}
