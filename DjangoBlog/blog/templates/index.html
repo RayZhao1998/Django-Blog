@@ -3,6 +3,8 @@
 {% block links %}
     {% load staticfiles %}
     <link href="{% static 'css_js/index.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css_js/pygments.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css_js/vue.css' %}" rel="stylesheet" type="text/css">
     <script src="{% static 'css_js/index.js' %}"></script>
 {% endblock %}
 {% block body %}
@@ -20,11 +22,16 @@
     <div class="container">
         {% for blog in all_blogs.object_list %}
             <div class="card" id="card-{{blog.id}}" onclick="location.href='{% url 'blog_id' blog.id %}'">
-                <div class="card-body">
-                    <h5 class="card-title">{{blog.title}}</h5>
-                    <p class="card-text">{{blog.content}}</p>
-                    <a href="#" class="card-link">{{blog.create_time}}</a>
-                    <a href="#" class="card-link">{{blog.tag}}</a>
+                <div class="container">
+                    <h5 class="card-title" style="text-align:center">{{blog.title}}</h5>
+                    <p class="card-text" style="text-align:center"># {{blog.category}}</p>
+                    <p class="card-text">{{blog.content|safe}}</p>
+                    <div style="text-align: center">
+                        {% for tag in blog.tag.all %}
+                        <span>{{tag}}</span>
+                        {% endfor %}
+                    </div>
+                    
                 </div>
             </div>
         {% endfor %}
@@ -73,3 +80,9 @@
 
     
 {% endblock %}
+
+<style>
+    #card-title {
+        text-align: center;
+    }
+</style>

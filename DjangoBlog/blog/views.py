@@ -18,6 +18,10 @@ class IndexView(View):
             page = 1
         p = Paginator(all_blogs, 5, request=request)
         all_blogs = p.page(page)
+        for blog in all_blogs.object_list:
+            description_end_index = blog.content.find("<!-- more -->")
+            blog.content = blog.content[:description_end_index]
+            blog.content = markdown2.markdown(blog.content, extras=['fenced-code-blocks'])
 
         return render(request, 'index.html', {
             'all_blogs': all_blogs,

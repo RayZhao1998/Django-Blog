@@ -6,3 +6,7 @@ a {
     width: 100%;
     margin-top: 20px;
 }
+
+.card-body {
+    width: 100%;
+}
