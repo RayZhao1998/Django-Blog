@@ -50,3 +50,19 @@ class Blog(models.Model):
         return self.title
     
 # Blog end
+
+# Comment start
+
+class Comment(models.Model):
+    nickname = models.CharField(verbose_name="昵称", max_length=20, default="匿名")
+    content = models.CharField(verbose_name="内容", max_length=300)
+    create_time = models.DateTimeField(verbose_name="创建时间", auto_now_add=True)
+    blog = models.ForeignKey(Blog, verbose_name="博客", on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = "博客评论"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.content[:10]
+# Comment end

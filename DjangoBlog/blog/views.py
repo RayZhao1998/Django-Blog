@@ -1,8 +1,10 @@
 from django.shortcuts import render
 from django.views import View
-from blog.models import Blog, Category, Tag
+from django.http import HttpResponse
+from blog.models import Blog, Category, Tag, Comment
 from pure_pagination import PageNotAnInteger, Paginator
 import markdown2
+from blog.forms import CommentForm
 
 # Create your views here.
 
@@ -25,6 +27,18 @@ class BlogDetailView(View):
     def get(self, request, blog_id):
         blog = Blog.objects.get(id=blog_id)
         blog.content = markdown2.markdown(blog.content, extras=['fenced-code-blocks'])
+
+        all_comments = Comment.objects.all().filter(blog_id=blog_id)
         return render(request, 'blog-detail.html', {
             'blog': blog,
+            'all_comments': all_comments,
         })
+
+class AddCommentView(View):
+    def post(self, request):
+        comment_form = CommentForm(request.POST)
+        if comment_form.is_valid():
+            comment_form.save()
+            return HttpResponse('{"status": "success"}', content_type='application/json')
+        else:
+            return HttpResponse('{"status": "fail"}', content_type="application/json")

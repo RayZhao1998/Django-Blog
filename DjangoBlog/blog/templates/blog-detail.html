@@ -4,21 +4,56 @@
     {% load staticfiles %}
     <link href="{% static 'css_js/pygments.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css_js/vue.css' %}" rel="stylesheet" type="text/css">
-    <link rel="stylesheet"
-      href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
-    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
-    
 {% endblock %}
 
 {% block body %}
     <h1>{{ blog.title }}</h1>
     <p>{{ blog.content|safe }}</p>
+
+    {% for comment in all_comments %}
+        {{comment.nickname}}
+        {{comment.content}}
+    {% endfor %}
+
+    <form id="comment-form">
+        <div>
+            <label>昵称：</label>
+            <input name="nickname" type="text">
+        </div>
+        <div>
+            <label>评论：</label>
+            <textarea name="content" type="text"></textarea>
+        </div>
+        <div>
+            <input name="blog" type="hidden" value="{{blog.id}}">
+        </div>
+        <button type="button" id="submit-btn">发表</button>
+    </form>
 {% endblock %}
 
+{% block script %}
 <script>
-    $(document).ready(function() {
-        $('pre code').each(function(i, block) {
-            hljs.highlightBlock(block)
+    $("#submit-btn").click(function() {
+        console.log($("#comment-form").serialize())
+        $.ajax({
+            type: "POST",
+            url: "/add_comment/",
+            data: $("#comment-form").serialize(),
+            dataType: "json",
+            async: true,
+            beforeSend:function(xhr, settings){
+                xhr.setRequestHeader("X-CSRFToken", "{{ csrf_token }}");
+            },
+            success: function(data) {
+                if (data.status == 'success') {
+                    alert("提交成功");
+                    window.location.reload();
+                } else if (data.status == 'fail') {
+                    alert("提交失败")
+                }
+            }
         })
     })
 </script>
+{% endblock %}
+
