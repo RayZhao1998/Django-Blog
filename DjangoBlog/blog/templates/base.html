@@ -12,6 +12,10 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body>
+    <a href="{% url 'rss' %}" rel="alternate">
+        <i class="fa fa-rss"></i>
+        RSS
+    </a>
     {% block body %}{% endblock %}
 </body>
 {% block script %}{% endblock %}
