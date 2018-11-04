@@ -40,3 +40,4 @@ python manage.py runserver
 - [ ] Dark Mode
 - [ ] 多 Markdown 主题更换
 - [ ] 集成 Google 分析并在后台展示
+- [ ] 文章首页置顶
