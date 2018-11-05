@@ -6,6 +6,34 @@
     <link href="{% static 'css_js/pygments.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css_js/vue.css' %}" rel="stylesheet" type="text/css">
     <script src="{% static 'css_js/index.js' %}"></script>
+
+    <style>
+        #card-title {
+            text-align: center;
+        }
+    
+        .tag {
+            border: 1px solid;
+            border-radius: 6px;
+            padding: 6px;
+            font-size: 10px;
+            background: #aaaaaa;
+            color: white;
+        }
+
+        .tag:hover {
+            background: #8d8d8d;
+        }
+
+        #content {
+            font-size: 14px !important;
+        }
+
+        img {
+            width: 80%;
+            margin-left: 10%;
+        }
+    </style>
 {% endblock %}
 {% block body %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -22,13 +50,14 @@
     <div class="container">
         {% for blog in all_blogs.object_list %}
             <div class="card" id="card-{{blog.id}}" onclick="location.href='{% url 'blog_id' blog.id %}'">
-                <div class="container">
+                <div class="container" id="content">
                     <h5 class="card-title" style="text-align:center">{{blog.title}}</h5>
                     <p class="card-text" style="text-align:center"># {{blog.category}}</p>
                     <p class="card-text">{{blog.content|safe}}</p>
-                    <div style="text-align: center">
+                    <div style="color: #aaaaaa">
+                        <i class="fas fa-tags"></i>
                         {% for tag in blog.tag.all %}
-                        <span>{{tag}}</span>
+                        <span class="tag" style="border: 1px solid; border-radius: 6px; padding: 6px; font-size: 10px; background: #aaaaaa; color: white">#{{tag}}</span>
                         {% endfor %}
                     </div>
                     
@@ -80,9 +109,3 @@
 
     
 {% endblock %}
-
-<style>
-    #card-title {
-        text-align: center;
-    }
-</style>
