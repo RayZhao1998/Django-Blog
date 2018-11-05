@@ -36,7 +36,7 @@ python manage.py runserver
 - [x] 支持 RSS 订阅
 - [x] 支持评论
 - [ ] 博客首页文章布局 列表/网格 切换
-- [ ] 后台添加友链
+- [x] 后台添加友链
 - [ ] Dark Mode
 - [ ] 多 Markdown 主题更换
 - [ ] 集成 Google 分析并在后台展示
