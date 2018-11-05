@@ -66,3 +66,16 @@ class Comment(models.Model):
     def __str__(self):
         return self.content[:10]
 # Comment end
+
+# FriendUrl start
+class FriendUrl(models.Model):
+    nickname = models.CharField(verbose_name="昵称", max_length=100)
+    url = models.CharField(verbose_name="链接", max_length=100)
+
+    class Meta:
+        verbose_name = "友链"
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.nickname
+# FriendUrl end
