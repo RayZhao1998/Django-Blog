@@ -67,10 +67,13 @@
             color: white;
             transition: all 0.6s;
         }
+
+        .container .card{
+            background-color: rgba(0, 0, 0, 0)
+        }
     </style>
 {% endblock %}
 {% block body %}
-    
     <div class="container">
         {% for blog in all_blogs.object_list %}
             <div class="card" id="card-{{blog.id}}" >

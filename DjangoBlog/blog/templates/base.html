@@ -11,6 +11,14 @@
     <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     {% block links %}{% endblock %}
     <title>{% block title %}{% endblock %}</title>
+    <style>
+        .dark-mode {
+            background: #403f3f;
+            color: white;
+        }
+    </style>
+
+    
 </head>
 <body>
     
@@ -28,6 +36,9 @@
                     </a>
                     {% comment %} <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a> {% endcomment %}
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="dark-mode">dark-mode</a>
+                </li>
             </ul>
         </div>
     </nav>
@@ -35,5 +46,10 @@
     {% block body %}{% endblock %}
 </body>
 {% block script %}{% endblock %}
+<script>
+    $("#dark-mode").click(function() {
+        $("body").addClass("dark-mode")
+    })
+</script>
 </html>
 
