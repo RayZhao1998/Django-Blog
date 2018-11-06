@@ -16,6 +16,10 @@
             background: #403f3f;
             color: white;
         }
+
+        .dropdown #dropdownMenu2{
+            border: none;
+        }
     </style>
 
     
@@ -39,6 +43,16 @@
                 <li class="nav-item">
                     <a class="nav-link" id="dark-mode">dark-mode</a>
                 </li>
+                <li class="nav-item">
+                    <div class="dropdown open">
+                        <button class="nav-link" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            分类
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu2">
+                            
+                        </div>
+                    </div>
+                </li>
             </ul>
         </div>
     </nav>
@@ -49,6 +63,19 @@
 <script>
     $("#dark-mode").click(function() {
         $("body").addClass("dark-mode")
+    })
+
+    $.ajax({
+        type: "GET",
+        url: "/getCategory/",
+        success: function(data) {
+            data = JSON.parse(data)
+            html = ""
+            for (index in data) {
+                html += '<button class="dropdown-item" type="button">' + data[index].fields.name + '</button>'
+            }
+            $(".dropdown-menu").append(html)
+        }
     })
 </script>
 </html>

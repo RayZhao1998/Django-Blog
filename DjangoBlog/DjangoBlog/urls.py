@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from blog.views import IndexView, BlogDetailView, AddCommentView
+from blog.views import IndexView, BlogDetailView, AddCommentView, GetCategoryView
 from blog.feeds import BlogRssFeed
 
 urlpatterns = [
@@ -24,4 +24,5 @@ urlpatterns = [
     url(r'^blog/(?P<blog_id>\d+)$', BlogDetailView.as_view(), name='blog_id'),
     url(r'^add_comment/$', AddCommentView.as_view(), name="add_comment"),
     url(r'^rss/$', BlogRssFeed(), name='rss'),
+    url(r'^getCategory/$', GetCategoryView.as_view(), name="getCategory"),
 ]

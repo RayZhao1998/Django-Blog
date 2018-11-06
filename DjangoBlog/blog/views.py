@@ -1,9 +1,11 @@
 from django.shortcuts import render
 from django.views import View
 from django.http import HttpResponse
+from django.core import serializers
 from blog.models import Blog, Category, Tag, Comment
 from pure_pagination import PageNotAnInteger, Paginator
 import markdown2
+import json
 from blog.forms import CommentForm
 
 # Create your views here.
@@ -37,6 +39,11 @@ class BlogDetailView(View):
             'blog': blog,
             'all_comments': all_comments,
         })
+
+class GetCategoryView(View):
+    def get(self, request):
+        categories = serializers.serialize("json", Category.objects.all())
+        return HttpResponse(json.dumps(categories), content_type="application/json")
 
 class AddCommentView(View):
     def post(self, request):
