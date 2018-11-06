@@ -10,7 +10,7 @@ from blog.forms import CommentForm
 
 class IndexView(View):
     def get(self, request):
-        all_blogs = Blog.objects.all().order_by('-id')
+        all_blogs = Blog.objects.order_by('-is_top', '-id')
 
         try:
             page = request.GET.get('page', 1)
