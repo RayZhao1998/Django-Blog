@@ -1,5 +1,5 @@
 django
 PyMySQL
 django-pure-pagination
-markdown
+markdown2
 pygments
