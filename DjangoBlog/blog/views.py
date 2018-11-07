@@ -10,23 +10,36 @@ from blog.forms import CommentForm
 
 # Create your views here.
 
+def content2Markdown(content, request):
+    try:
+        page = request.GET.get('page', 1)
+    except PageNotAnInteger:
+        page = 1
+    p = Paginator(content, 5, request=request)
+    blogs = p.page(page)
+    for blog in blogs.object_list:
+        description_end_index = blog.content.find("<!-- more -->")
+        blog.content = blog.content[:description_end_index]
+        blog.content = markdown2.markdown(blog.content, extras=['fenced-code-blocks']) 
+    return blogs
+
 class IndexView(View):
     def get(self, request):
         all_blogs = Blog.objects.order_by('-is_top', '-id')
 
-        try:
-            page = request.GET.get('page', 1)
-        except PageNotAnInteger:
-            page = 1
-        p = Paginator(all_blogs, 5, request=request)
-        all_blogs = p.page(page)
-        for blog in all_blogs.object_list:
-            description_end_index = blog.content.find("<!-- more -->")
-            blog.content = blog.content[:description_end_index]
-            blog.content = markdown2.markdown(blog.content, extras=['fenced-code-blocks'])
+        # try:
+        #     page = request.GET.get('page', 1)
+        # except PageNotAnInteger:
+        #     page = 1
+        # p = Paginator(all_blogs, 5, request=request)
+        # all_blogs = p.page(page)
+        # for blog in all_blogs.object_list:
+        #     description_end_index = blog.content.find("<!-- more -->")
+        #     blog.content = blog.content[:description_end_index]
+        #     blog.content = markdown2.markdown(blog.content, extras=['fenced-code-blocks'])
 
         return render(request, 'index.html', {
-            'all_blogs': all_blogs,
+            'all_blogs': content2Markdown(all_blogs, request),
         })
 
 class BlogDetailView(View):
@@ -58,7 +71,7 @@ class CategoryBlogListView(View):
     def get(self, request, category):
         category = Category.objects.filter(name=category)
         cat_id = category.values("id")[0]["id"]
-        blogs = Blog.objects.all().filter(category_id=cat_id)
-        return render(request, 'category-blog-list.html', {
-            'blogs': blogs,
+        all_blogs = Blog.objects.all().filter(category_id=cat_id)
+        return render(request, 'index.html', {
+            'all_blogs': content2Markdown(all_blogs, request),
         })
