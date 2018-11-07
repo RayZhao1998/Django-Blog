@@ -72,7 +72,7 @@
             data = JSON.parse(data)
             html = ""
             for (index in data) {
-                html += '<button class="dropdown-item" type="button">' + data[index].fields.name + '</button>'
+                html += '<a class="dropdown-item" href="/category/'+ data[index].fields.name + '">' + data[index].fields.name + '</a>'
             }
             $(".dropdown-menu").append(html)
         }

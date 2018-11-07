@@ -53,3 +53,12 @@ class AddCommentView(View):
             return HttpResponse('{"status": "success"}', content_type='application/json')
         else:
             return HttpResponse('{"status": "fail"}', content_type="application/json")
+
+class CategoryBlogListView(View):
+    def get(self, request, category):
+        category = Category.objects.filter(name=category)
+        cat_id = category.values("id")[0]["id"]
+        blogs = Blog.objects.all().filter(category_id=cat_id)
+        return render(request, 'category-blog-list.html', {
+            'blogs': blogs,
+        })
