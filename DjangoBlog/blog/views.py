@@ -26,18 +26,6 @@ def content2Markdown(content, request):
 class IndexView(View):
     def get(self, request):
         all_blogs = Blog.objects.order_by('-is_top', '-id')
-
-        # try:
-        #     page = request.GET.get('page', 1)
-        # except PageNotAnInteger:
-        #     page = 1
-        # p = Paginator(all_blogs, 5, request=request)
-        # all_blogs = p.page(page)
-        # for blog in all_blogs.object_list:
-        #     description_end_index = blog.content.find("<!-- more -->")
-        #     blog.content = blog.content[:description_end_index]
-        #     blog.content = markdown2.markdown(blog.content, extras=['fenced-code-blocks'])
-
         return render(request, 'index.html', {
             'all_blogs': content2Markdown(all_blogs, request),
         })
@@ -71,7 +59,7 @@ class CategoryBlogListView(View):
     def get(self, request, category):
         category = Category.objects.filter(name=category)
         cat_id = category.values("id")[0]["id"]
-        all_blogs = Blog.objects.all().filter(category_id=cat_id)
+        all_blogs = Blog.objects.all().filter(category_id=cat_id).order_by('-id')
         return render(request, 'index.html', {
             'all_blogs': content2Markdown(all_blogs, request),
         })
