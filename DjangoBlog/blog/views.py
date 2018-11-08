@@ -33,6 +33,8 @@ class IndexView(View):
 class BlogDetailView(View):
     def get(self, request, blog_id):
         blog = Blog.objects.get(id=blog_id)
+        description_end_index = blog.content.find("<!-- more -->")
+        blog.content = blog.content[description_end_index+14:]
         blog.content = markdown2.markdown(blog.content, extras=['fenced-code-blocks'])
 
         all_comments = Comment.objects.all().filter(blog_id=blog_id)

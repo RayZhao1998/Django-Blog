@@ -2,98 +2,27 @@
 {% block title %}index{% endblock %}
 {% block links %}
     {% load staticfiles %}
-    <link href="{% static 'css_js/index.css' %}" rel="stylesheet" type="text/css">
+    <link href="{% static 'css_js/normal-index.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css_js/pygments.css' %}" rel="stylesheet" type="text/css">
     <link href="{% static 'css_js/vue.css' %}" rel="stylesheet" type="text/css">
-    <script src="{% static 'css_js/index.js' %}"></script>
-
-    <style>
-        #card-title {
-            text-align: center;
-        }
-
-        .tag-area {
-            margin-top: 20px;
-            color: #15b886;
-            padding-bottom: 1rem;
-        }
     
-        .tag {
-            border: 1px solid;
-            border-radius: 6px;
-            padding: 6px;
-            font-size: 10px;
-            background: #15b886;
-            color: white;
-        }
-
-        #content {
-            font-size: 14px !important;
-        }
-
-        #category-p {
-            text-align: center;
-            color: #15b886;
-            
-        }
-
-        #category {
-            text-align: center;
-            padding: 0.5rem;
-            border-radius: 4px;
-        }
-
-        #category:hover {
-            background: #15b886;
-            color: white;
-        }
-
-        img {
-            width: 80%;
-            margin-left: 10%;
-        }
-
-        #readmore-p {
-            margin-top: 20px;
-            text-align: center;
-        }
-        #readmore {
-            border: 1.4px solid;
-            padding: 0.5rem
-        }
-
-        #readmore:hover {
-            background: black;
-            color: white;
-            transition: all 0.6s;
-        }
-
-        .container .card{
-            background-color: rgba(0, 0, 0, 0)
-        }
-
-        .card {
-            margin-top: 16px;
-            box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
-        }
-    </style>
+    <script src="{% static 'css_js/index.js' %}"></script>
+    
 {% endblock %}
 {% block body %}
     <div class="container">
         {% for blog in all_blogs.object_list %}
-            <div class="card" id="card-{{blog.id}}" >
-                <div class="container" id="content">
-                    <h1 class="card-title" style="text-align:center">{{blog.title}}</h1>
-                    <p id="category-p"><a id="category" href="{% url 'category' blog.category%}"><i class="fas fa-sticky-note"></i> {{blog.category}}</a></p>
-                    <p class="card-text"></p>{{blog.content|safe}}</p>
-                    <p id="readmore-p"><a id="readmore" href="{% url 'blog_id' blog.id %}">阅读更多</a></p>
-                    <div class="tag-area">
-                        <i class="fas fa-tags"></i>
-                        {% for tag in blog.tag.all %}
-                        <span class="tag">#{{tag}}</span>
-                        {% endfor %}
-                    </div>
+            <div class="blog-item">
+                <h1>{{blog.title}}</h1>
+                <p class="description">{{blog.content|safe}}</p>
+                <p id="readmore-p"><a id="readmore" href="{% url 'blog_id' blog.id %}">阅读更多</a></p> 
+                <div class="tag-area">
+                    <i class="fas fa-tags"></i>
+                    {% for tag in blog.tag.all %}
+                    <span class="tag">#{{tag}}</span>
+                    {% endfor %}
                 </div>
+                <hr>
             </div>
         {% endfor %}
     </div> 

@@ -1,0 +1,50 @@
+.tag-area {
+    margin-top: 20px;
+    color: #15b886;
+    padding-bottom: 1rem;
+}
+
+.tag {
+    border: 1px solid;
+    border-radius: 6px;
+    padding: 6px;
+    font-size: 10px;
+    background: #15b886;
+    color: white;
+}
+
+img {
+    width: 80%;
+    margin-left: 10%;
+}
+
+#readmore-p {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 12px;
+}
+
+#readmore {
+    border: 1.4px solid;
+    padding: 0.4rem
+}
+
+#readmore:hover {
+    background: #15b886;
+    color: white;
+    transition: all 0.6s;
+}
+
+.container {
+    background-color: rgba(0, 0, 0, 0)
+}
+
+.blog-item {
+    width: 80%;
+    margin-left: 10%;
+    margin-top: 2rem;
+}
+
+hr {
+    width: 80%；
+}
